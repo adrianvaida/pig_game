@@ -13,3 +13,5 @@ var scors, roundScore, activePlayer;
 scors = [0,0];
 roundScore = 0;
 activePlayer = 0;
+
+console.log(scors);
