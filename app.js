@@ -8,7 +8,7 @@ GAME RULES:
 - The first player to reach 100 points on GLOBAL score wins the game
 
 */
-var scors, roundScore, activePlayer, dice;
+var scors, roundScore, activePlayer, gamePlaying;
 
 init();
 
@@ -25,31 +25,33 @@ init();
 // }
 
 document.querySelector(".btn-roll").addEventListener('click', function () {
-    // 1. Random number
-    var dice = Math.floor(Math.random() * 6) + 1;
+    if (gamePlaying) {
+        // 1. Random number
+        var dice = Math.floor(Math.random() * 6) + 1;
 
-    // 2. display the result
-    var diceDOM = document.querySelector(".dice")
-    diceDOM.style.display = 'block';
-    diceDOM.src = 'dice-' + dice + '.png';
+        // 2. display the result
+        var diceDOM = document.querySelector(".dice")
+        diceDOM.style.display = 'block';
+        diceDOM.src = 'dice-' + dice + '.png';
 
-    // 3. update the round scoure IF the rolled number was not 1
+        // 3. update the round scoure IF the rolled number was not 1
 
-    if (dice !== 1) {
-        //add score 
-        roundScore += dice;
-        document.querySelector('#current-' + activePlayer).textContent = roundScore;
-    } else {
-        //next player
-        nextPlayer();
+        if (dice !== 1) {
+            //add score 
+            roundScore += dice;
+            document.querySelector('#current-' + activePlayer).textContent = roundScore;
+        } else {
+            //next player
+            nextPlayer();
 
+        }
     }
-
 });
 
 
 document.querySelector('.btn-hold').addEventListener('click', function () {
-    // add curent score to global score
+   if(gamePlaying) {
+        // add curent score to global score
 
     scors[activePlayer] += roundScore;
 
@@ -62,9 +64,11 @@ document.querySelector('.btn-hold').addEventListener('click', function () {
         document.querySelector('.dice').style.display = 'none';
         document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
         document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
+        gamePlaying = false;
     } else {
         nextPlayer();
     }
+   }
 
 
 });
